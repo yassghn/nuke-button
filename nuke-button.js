@@ -34,6 +34,7 @@
             hometl: 'div[aria-label="Timeline: Your Home Timeline"]',
             tl: 'div[aria-label*="Timeline:"]',
             statustl: 'div[aria-label="Timeline: Conversation"]',
+            searchtl: 'div[aria-label="Timeline: Search timeline"]',
             status: 'article[data-testid="tweet"]',
             postHref: 'a[href*="status"]',
             avatar: 'div[data-testid="Tweet-User-Avatar"]',
@@ -1090,6 +1091,14 @@
             editStatusViewCss()
             // obvserve timeline
             observeTimeline(config.selectors.statustl)
+        } else if (window.location.href.includes('search?q=')) {
+            // check for search page
+            //update page changed
+            gPageChanged = updatePage ? true : false
+            // wait for timeline to load in
+            await getElement(config.selectors.searchtl)
+            // observe timeline
+            observeTimeline(config.selectors.searchtl)
         }
     }
 
