@@ -1040,7 +1040,7 @@
             function pollLoggedIn() {
                 // poll with set interval
                 intervalId = setInterval(function () {
-                    // todo: bringing ip the report modal breaks this
+                    //check href and window vars
                     if (!(window?.__META_DATA__?.isLoggedIn == false) &&
                         !window.location.href.includes('/i/flow/login')) {
                         // clear interval
