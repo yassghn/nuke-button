@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name        nuke button
-// @namespace   http://tampermonkey.net/
+// @namespace   https://github.com/yassghn/nuke-button
 // @version     2025-02-17
 // @description kill 'em all
+// @downloadURL https://github.com/yassghn/nuke-button/raw/refs/heads/master/nuke-button.js
 // @icon        https://www.svgrepo.com/download/528868/bomb-emoji.svg
 // @author      yassghn
 // @match       https://twitter.com/*
