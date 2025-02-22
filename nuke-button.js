@@ -162,7 +162,7 @@
     // init white list
     function initWhiteList() {
         // array of usernames to whitelist
-        gWhiteList = []
+        gWhiteList = ['boryshn', 'yassghn_', 'commet_w']
     }
 
     // init globals
