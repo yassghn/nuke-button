@@ -1039,8 +1039,7 @@
                 intervalId = setInterval(function () {
                     // todo: bringing ip the report modal breaks this
                     if (!(window?.__META_DATA__?.isLoggedIn == false) &&
-                        !window.location.href.includes('/i/flow/login') &&
-                        !Object.keys(reactState).find((key) => key === "settings/usernames")) {
+                        !window.location.href.includes('/i/flow/login')) {
                         // clear interval
                         clearInterval(intervalId)
                         // resolve
