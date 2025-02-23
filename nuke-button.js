@@ -1066,6 +1066,7 @@
         if (window.location.href.endsWith('home')) {
             // check for home
             // todo: work out updating this value after more back and forth browsing
+            // todo: work out race conditions where polling fails
             // update page changed
             gPageChanged = updatePage ? true : false
             addHomeNavigationListener()
@@ -1084,6 +1085,8 @@
             observeTimeline(selector)
         } else if (window.location.href.includes('status')) {
             // check for status (post) view page
+            // todo: editstatusview does not update correctly sometimes
+            // todo: if you need to use 'view' for the post nuke-button does not populate to the main status
             //update page changed
             gPageChanged = updatePage ? true : false
             // wait for timeline to load in
