@@ -672,7 +672,12 @@
     }
 
     // filter block list
-    function filterBlockList(item, index, arr) {
+    function filterDedupWhiteList(item, index, arr) {
+        // do not include white listed accounts
+        if (gWhiteList.indexOf(item.username) > -1) {
+            return false
+        }
+        // dedup based username and userid
         const i = arr.findIndex((item2) => ['username', 'userId'].every((key) => item2[key] === item[key]))
         return i === index
     }
@@ -695,7 +700,7 @@
         // combine data
         const blockList = [].concat(target, following, followers, verifiedFollowers, responses, retweeters)
         // filter blocklist based on username and userid
-        const filteredBlockList = blockList.filter(filterBlockList)
+        const filteredBlockList = blockList.filter(filterDedupWhiteList)
         // return block list
         return filteredBlockList
     }
