@@ -671,8 +671,14 @@
         return ret
     }
 
+    // filter block list
+    function filterBlockList(item, index, arr) {
+        const i = arr.findIndex((item2) => ['username', 'userId'].every((key) => item2[key] === item[key]))
+        return i === index
+    }
+
     // get block list
-    async function getBlockList(userId, tweetId) {
+    async function getBlockList(userId, username, tweetId) {
         // get data
         const followingData = await fetchUserFollowing(userId)
         const following = extractUserResponseData(followingData?.data?.user?.result?.timeline?.timeline?.instructions)
@@ -684,16 +690,14 @@
         const responses = extractTweetResponseData(responsesData?.data?.threaded_conversation_with_injections_v2?.instructions)
         const retweetersData = await fetchTweetRetweeters(tweetId)
         const retweeters = extractUserResponseData(retweetersData?.data?.retweeters_timeline?.timeline?.instructions)
+        // add target user to front of array
+        const target = [{ username: username, isBlocking: false, userId: userId }]
         // combine data
-        const blockList = [].concat(following, followers, verifiedFollowers, responses, retweeters)
+        const blockList = [].concat(target, following, followers, verifiedFollowers, responses, retweeters)
         // filter blocklist based on username and userid
-        // todo: not sure how to filter yet
-        const filteredBlockList = blockList.filter(
-            (item, index, arr) =>
-                arr.findIndex(
-                    (item2) => ['username', 'userId'].every((key) => item2[key] === item[key])) === index)
+        const filteredBlockList = blockList.filter(filterBlockList)
         // return block list
-        return blockList
+        return filteredBlockList
     }
 
     // open href in new tab
