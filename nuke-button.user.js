@@ -217,10 +217,17 @@
         }
         try {
             const response = await fetch(url, options)
-            const data = await response.json()
-            return data
+            // check for errors
+            if (response.ok) {
+                // return data
+                const data = await response.json()
+                return data
+            } else {
+                // throw response error
+                const errors = await response.json()
+                throw errors
+            }
         } catch (error) {
-            console.error(`Error in API request to ${url}: `, error)
             throw error
         }
     }
@@ -240,8 +247,12 @@
             userId
         }
         const url = buildUrl(config.apiEndpoints.following, variables)
-        const data = await apiRequest(url)
-        return data
+        try {
+            const data = await apiRequest(url)
+            return data
+        } catch (e) {
+            throw e
+        }
     }
 
     // fetch users followers
@@ -250,8 +261,12 @@
             userId
         }
         const url = buildUrl(config.apiEndpoints.followers, variables)
-        const data = await apiRequest(url)
-        return data
+        try {
+            const data = await apiRequest(url)
+            return data
+        } catch (e) {
+            throw e
+        }
     }
 
     // fetch verified followers
@@ -260,8 +275,12 @@
             userId: userId
         }
         const url = buildUrl(config.apiEndpoints.verifiedFollowers, variables)
-        const data = await apiRequest(url)
-        return data
+        try {
+            const data = await apiRequest(url)
+            return data
+        } catch (e) {
+            throw e
+        }
     }
 
     // Fetches responses for a tweet, with optional pagination cursor
@@ -271,8 +290,12 @@
             cursor
         }
         const url = buildUrl(config.apiEndpoints.tweetDetail, variables)
-        const data = await apiRequest(url)
-        return data
+        try {
+            const data = await apiRequest(url)
+            return data
+        } catch (e) {
+            throw e
+        }
     }
 
     // fetch retweeters
@@ -281,16 +304,24 @@
             tweetId: tweetId
         }
         const url = buildUrl(config.apiEndpoints.retweeters, variables)
-        const data = await apiRequest(url)
-        return data
+        try {
+            const data = await apiRequest(url)
+            return data
+        } catch (e) {
+            throw e
+        }
     }
 
     // fetch user id from username
     async function fetchUserId(username) {
         const variables = { screen_name: username }
         const url = buildUrl(config.apiEndpoints.userid, variables)
-        const data = await apiRequest(url)
-        return data
+        try {
+            const data = await apiRequest(url)
+            return data
+        } catch (e) {
+            throw e
+        }
     }
 
     // blocks a user with the given user ID
@@ -684,25 +715,29 @@
 
     // get block list
     async function getBlockList(userId, username, tweetId) {
-        // get data
-        const followingData = await fetchUserFollowing(userId)
-        const following = extractUserResponseData(followingData?.data?.user?.result?.timeline?.timeline?.instructions)
-        const followersData = await fetchUserFollowers(userId)
-        const followers = extractUserResponseData(followersData?.data?.user?.result?.timeline?.timeline?.instructions)
-        const verifiedFollowersData = await fetchVerifiedFollowers(userId)
-        const verifiedFollowers = extractUserResponseData(verifiedFollowersData?.data?.user?.result?.timeline?.timeline?.instructions)
-        const responsesData = await fetchTweetResponses(tweetId)
-        const responses = extractTweetResponseData(responsesData?.data?.threaded_conversation_with_injections_v2?.instructions)
-        const retweetersData = await fetchTweetRetweeters(tweetId)
-        const retweeters = extractUserResponseData(retweetersData?.data?.retweeters_timeline?.timeline?.instructions)
-        // add target user to front of array
-        const target = [{ username: username, isBlocking: false, userId: userId }]
-        // combine data
-        const blockList = [].concat(target, following, followers, verifiedFollowers, responses, retweeters)
-        // filter blocklist based on username and userid
-        const filteredBlockList = blockList.filter(filterDedupWhiteList)
-        // return block list
-        return filteredBlockList
+        try {
+            // get data
+            const followingData = await fetchUserFollowing(userId)
+            const following = extractUserResponseData(followingData?.data?.user?.result?.timeline?.timeline?.instructions)
+            const followersData = await fetchUserFollowers(userId)
+            const followers = extractUserResponseData(followersData?.data?.user?.result?.timeline?.timeline?.instructions)
+            const verifiedFollowersData = await fetchVerifiedFollowers(userId)
+            const verifiedFollowers = extractUserResponseData(verifiedFollowersData?.data?.user?.result?.timeline?.timeline?.instructions)
+            const responsesData = await fetchTweetResponses(tweetId)
+            const responses = extractTweetResponseData(responsesData?.data?.threaded_conversation_with_injections_v2?.instructions)
+            const retweetersData = await fetchTweetRetweeters(tweetId)
+            const retweeters = extractUserResponseData(retweetersData?.data?.retweeters_timeline?.timeline?.instructions)
+            // add target user to front of array
+            const target = [{ username: username, isBlocking: false, userId: userId }]
+            // combine data
+            const blockList = [].concat(target, following, followers, verifiedFollowers, responses, retweeters)
+            // filter blocklist based on username and userid
+            const filteredBlockList = blockList.filter(filterDedupWhiteList)
+            // return block list
+            return filteredBlockList
+        } catch (e) {
+            throw e
+        }
     }
 
     // open href in new tab
@@ -759,10 +794,15 @@
         }
         // extract user id
         const targetUserId = extractUserId(userData)
-        const blockList = await getBlockList(targetUserId, tweetId)
-        const result = await blockBlockList(blockList, href)
-        log(`processing finished for ${href}: blocked ${result} accounts`)
-        // check for errors TODO
+        try {
+            const blockList = await getBlockList(targetUserId, tweetId)
+            const result = await blockBlockList(blockList, href)
+            log(`processing finished for ${href}: blocked ${result} accounts`)
+        } catch (e) {
+            // log error
+            log(e, true)
+            return undefined
+        }
         // return href on success
         return href
     }
