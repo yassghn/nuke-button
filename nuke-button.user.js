@@ -798,7 +798,7 @@
             }
             // extract user id
             const targetUserId = extractUserId(userData)
-            const blockList = await getBlockList(targetUserId, tweetId)
+            const blockList = await getBlockList(targetUserId, targetUsername, tweetId)
             const result = await blockBlockList(blockList, href)
             log(`processing finished for ${href}: blocked ${result} accounts`)
         } catch (e) {
