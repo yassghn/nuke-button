@@ -228,6 +228,9 @@
                 throw errors
             }
         } catch (error) {
+            // add url to error
+            error.url = url
+            //throw error
             throw error
         }
     }
@@ -799,6 +802,10 @@
             const result = await blockBlockList(blockList, href)
             log(`processing finished for ${href}: blocked ${result} accounts`)
         } catch (e) {
+            // log error url
+            if (e.url) {
+                log(`api request error for url: ${e.url}`, true)
+            }
             // log error
             log(e, true)
             return undefined
