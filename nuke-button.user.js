@@ -13,6 +13,7 @@
 // @match       https://mobile.x.com/*
 // @run-at      document-start
 // @grant       none
+// @license     OUI
 // @require     https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js
 // ==/UserScript==
 
