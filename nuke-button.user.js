@@ -3,8 +3,8 @@
 // @namespace   https://github.com/yassghn/nuke-button
 // @version     2025-02-28
 // @description kill 'em all
-// @updateURL   https://github.com/yassghn/nuke-button/raw/refs/heads/master/nuke-button.js
-// @downloadURL https://github.com/yassghn/nuke-button/raw/refs/heads/master/nuke-button.js
+// @downloadURL https://update.greasyfork.org/scripts/528380/nuke%20button.user.js
+// @updateURL   https://update.greasyfork.org/scripts/528380/nuke%20button.meta.js
 // @icon        https://www.svgrepo.com/download/528868/bomb-emoji.svg
 // @author      yassghn
 // @match       https://twitter.com/*
