@@ -785,16 +785,16 @@
         // get username from href
         const targetUsername = href.split('/')[1]
         const tweetId = href.split('/')[3]
-        // get user data
-        const userData = await fetchUserId(targetUsername)
-        // check for error
-        if (userData.message) {
-            // return error on error
-            return userData
-        }
-        // extract user id
-        const targetUserId = extractUserId(userData)
         try {
+            // get user data
+            const userData = await fetchUserId(targetUsername)
+            // check for error
+            if (userData.message) {
+                // throw error
+                throw userData.message
+            }
+            // extract user id
+            const targetUserId = extractUserId(userData)
             const blockList = await getBlockList(targetUserId, tweetId)
             const result = await blockBlockList(blockList, href)
             log(`processing finished for ${href}: blocked ${result} accounts`)
