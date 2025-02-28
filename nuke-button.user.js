@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        nuke button
 // @namespace   https://github.com/yassghn/nuke-button
-// @version     2025-02-17
+// @version     2025-02-28
 // @description kill 'em all
 // @updateURL   https://github.com/yassghn/nuke-button/raw/refs/heads/master/nuke-button.js
 // @downloadURL https://github.com/yassghn/nuke-button/raw/refs/heads/master/nuke-button.js
