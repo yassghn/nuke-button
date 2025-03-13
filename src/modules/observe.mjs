@@ -6,7 +6,7 @@
 
 import { config } from './config.mjs'
 import { log } from './log.mjs'
-import { gObservers, gCurrentPage, gPageChanged, initCurrentPage } from './globals.mjs'
+import { gObservers, gCurrentPage, gPageChanged, setCurrentPage, setPageChanged } from './globals.mjs'
 import { getElement, pollReactState, isLoggedIn } from './polling.mjs'
 import { addNukeButton, appendNukeButtonHtml } from './nuke-button.mjs'
 
@@ -60,7 +60,7 @@ async function observeTimeline(selector) {
 // when home timeline navigation event is propagated
 function onHomeNavigationEvent() {
 	// reset page changed if it was changed
-	$gPageChanged = false
+	setPageChanged(false)
 	// create timeline observer
 	observeTimeline(config.selectors.hometl)
 	log('home nav changed')
@@ -71,7 +71,7 @@ async function observeWindowHref() {
 		// check if location changed
 		if (gCurrentPage != window.location.href) {
 			// update current page
-			initCurrentPage()
+			setCurrentPage(window.location.href)
 			onWindowHrefChange()
 		}
 	}, 1000)
@@ -84,7 +84,7 @@ function observeWindowHrefasdf() {
 		// check if location changed
 		if (gCurrentPage != window.location.href) {
 			// update current page
-			initCurrentPage()
+			setCurrentPage(window.location.href)
 			onWindowHrefChange()
 		}
 	})
@@ -101,7 +101,7 @@ export async function processCurrentPage(updatePage = false) {
 		// todo: work out updating this value after more back and forth browsing
 		// todo: work out race conditions where polling fails
 		// update page changed
-		gPageChanged = updatePage ? true : false
+		setPageChanged(updatePage ? true : false)
 		addHomeNavigationListener()
 		// wait for timeline to load in
 		await getElement(config.selectors.hometl)
@@ -110,7 +110,7 @@ export async function processCurrentPage(updatePage = false) {
 	} else if (isUserPage()) {
 		// check for userpage
 		// update page changed
-		gPageChanged = updatePage ? true : false
+		setPageChanged(updatePage ? true : false)
 		// get userpage timeline selector
 		const selector = getUserPageTimelineSelector()
 		// wait for timeline to load in
@@ -121,7 +121,7 @@ export async function processCurrentPage(updatePage = false) {
 		// todo: editstatusview does not update correctly sometimes
 		// todo: if you need to use 'view' for the post nuke-button does not populate to the main status
 		//update page changed
-		gPageChanged = updatePage ? true : false
+		setPageChanged(updatePage ? true : false)
 		// wait for timeline to load in
 		await getElement(config.selectors.statustl)
 		// change status view css
@@ -131,7 +131,7 @@ export async function processCurrentPage(updatePage = false) {
 	} else if (window.location.href.includes('search?q=')) {
 		// check for search page
 		//update page changed
-		gPageChanged = updatePage ? true : false
+		setPageChanged(updatePage ? true : false)
 		// wait for timeline to load in
 		await getElement(config.selectors.searchtl)
 		// observe timeline
