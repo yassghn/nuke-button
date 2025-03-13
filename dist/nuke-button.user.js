@@ -131,6 +131,70 @@
 	/**
 	 * nuke-button
 	 *
+	 * globals.mjs
+	 */
+
+
+	// globals
+	var gCurrentPage = '';
+	var gObservers = {};
+	var gProfile = '';
+	var gPageChanged = false;
+	var gWhiteList = [];
+
+	// init profile href
+	function initProfile() {
+		// check if we're on a mobile device
+		if (!config.mobile) {
+			gProfile = $(config.selectors.profile).attr('href').split('/')[1];
+		} else {
+			gProfile = $(config.selectors.communities).attr('href').split('/')[1];
+		}
+	}
+
+	// init observers
+	function initObservers() {
+		gObservers = { href: new MutationObserver(() => { }), timeline: new MutationObserver(() => { }) };
+	}
+
+	// init white list
+	function initWhiteList() {
+		// array of usernames to whitelist
+		gWhiteList = ['boryshn', 'yassghn_', 'commet_w'];
+	}
+
+	// set current page
+	function initCurrentPage() {
+		gCurrentPage = window.location.href;
+	}
+
+	// update current page
+	function setCurrentPage(page) {
+		gCurrentPage = page;
+	}
+
+	function setPageChanged(changed) {
+		gPageChanged = changed;
+	}
+
+	// init globals
+	function initGlobals() {
+		initCurrentPage();
+		initObservers();
+		initProfile();
+		initWhiteList();
+	}
+
+	// disconnect observers
+	function disconnectObservers() {
+		for (let observer of gObservers) {
+			observer.disconnect();
+		}
+	}
+
+	/**
+	 * nuke-button
+	 *
 	 * log.mjs
 	 */
 
@@ -151,6 +215,55 @@
 	 *
 	 * fight-react.mjs
 	 */
+
+
+	// delete react state
+	/* function deleteReactState() {
+		if ($('div')[0].firstElementChild['wrappedJSObject']) {
+			delete ($('div')[0].firstElementChild['wrappedJSObject'])
+			return ''
+
+		}
+		if ($('div')[0].firstElementChild) {
+			delete ($('div')[0].firstElementChild)
+
+		}
+		//const reactPropsKey = Object.keys(wrapped).find(key => key.startsWith('__reactProps'))
+		//         //const state = wrapped[reactPropsKey].children?.props?.children?.props?.store?.getState()
+		//         //delete(state)
+	} */
+
+	/**
+	 *
+	 * notes:
+	 * reactProps.children.props.history ???
+	 */
+	/* async function removePostsReactProps(post, href) {
+		const wrapped = $('div')[0].firstElementChild['wrappedJSObject'] || $('div')[0].firstElementChild
+		const reactPropsKey = Object.keys(wrapped).find(key => key.startsWith('__reactProps'))
+		const reactFiberKey = Object.keys(wrapped).find(key => key.startsWith('__reactFiber'))
+		const reactProps = wrapped[reactPropsKey]
+		const reactFiber = wrapped[reactFiberKey]
+		logObj(reactFiber)
+		logObj(reactProps)
+		 delete(reactFiber.memorizedProps)
+		 delete(reactFiber.stateNode)
+		 delete(reactProps.children.props.children.props)
+		//delete(wrapped[key])
+		//wrapped[key] = {}
+		//removeReactObjects(href)
+		const article = $(post).find('article')[0].firstElementChild['wrappedJSObject']
+		const keys = Object.keys(article).filter(key => key.startsWith('__react'))
+		//console.dir(article, { depth: null })
+		logObj(keys)
+		keys.forEach((key) => {
+			//logObj(article[key])
+			if (article[key]) {
+				delete (article[key])
+			}
+		})
+		//logObj(article)
+	} */
 
 	// get react state
 	function getReactState() {
@@ -331,70 +444,6 @@
 		});
 		// return promise
 		return promise
-	}
-
-	/**
-	 * nuke-button
-	 *
-	 * globals.mjs
-	 */
-
-
-	// globals
-	var gCurrentPage = '';
-	var gObservers = {};
-	var gProfile = '';
-	var gPageChanged = false;
-	var gWhiteList = [];
-
-	// init profile href
-	function initProfile() {
-		// check if we're on a mobile device
-		if (!config.mobile) {
-			gProfile = $(config.selectors.profile).attr('href').split('/')[1];
-		} else {
-			gProfile = $(config.selectors.communities).attr('href').split('/')[1];
-		}
-	}
-
-	// init observers
-	function initObservers() {
-		gObservers = { href: new MutationObserver(() => { }), timeline: new MutationObserver(() => { }) };
-	}
-
-	// init white list
-	function initWhiteList() {
-		// array of usernames to whitelist
-		gWhiteList = ['boryshn', 'yassghn_', 'commet_w'];
-	}
-
-	// set current page
-	function initCurrentPage() {
-		gCurrentPage = window.location.href;
-	}
-
-	// update current page
-	function setCurrentPage(page) {
-		gCurrentPage = page;
-	}
-
-	function setPageChanged(changed) {
-		gPageChanged = changed;
-	}
-
-	// init globals
-	function initGlobals() {
-		initCurrentPage();
-		initObservers();
-		initProfile();
-		initWhiteList();
-	}
-
-	// disconnect observers
-	function disconnectObservers() {
-		for (let observer of gObservers) {
-			observer.disconnect();
-		}
 	}
 
 	/**
@@ -731,6 +780,41 @@
 	 */
 
 
+	// add processing html/css
+	/* function addProcessingElement(post, href, style) {
+	    // create processing html
+	    const processingHtml = $(getProcessingHtml(href))
+	    // make timeline item div wrappers
+	    const divWrapper = $('<div/>')
+	    const outterDivWrapper = $('<div/>')
+	    const separatorDiv = $('<div/>')
+	    const divWrapperClasses = $(post).children().eq(0).attr('class')
+	    const outterDivWrapperClasses = $(post).attr('class')
+	    const separatorClasses = $(post).find('div[role="separator"]').attr('class')
+	    const transformCss = $(post).css('transform')
+	    log(transformCss)
+	    $(divWrapper).attr('class', divWrapperClasses)
+	    $(outterDivWrapper).attr('class', outterDivWrapperClasses)
+	    $(outterDivWrapper).attr('style', `transform: ${transformCss}; position: relative; width: 100%;`)
+	    $(outterDivWrapper).attr('data-testid', 'cellInnerDiv')
+	    $(separatorDiv).attr('class', separatorClasses)
+	    $(separatorDiv).attr('role', 'separator')
+	    // wrap divs
+	    $(processingHtml).attr('class', outterDivWrapperClasses)
+	    $(processingHtml).find('div').attr('class', outterDivWrapperClasses)
+	    // add css to elements
+	    $(processingHtml).css(getProcessingCss())
+	    $(processingHtml).wrap($(outterDivWrapper)).wrap($(divWrapper))
+	    const finalDiv = $(processingHtml).parents().eq(1)
+	    $(finalDiv).append($(separatorDiv))
+	    log($(separatorDiv))
+	    log(finalDiv)
+	    // add to dom
+	    $(finalDiv).insertBefore($(post))
+	    // return outter most div wrapper
+	    return finalDiv
+	} */
+
 	// append style element to head
 	function appendStyle() {
 	    let $style = document.createElement('style');
@@ -902,22 +986,22 @@
 
 	// get post href
 	function getPostHref(post) {
-		// get target links attached to post
-		const links = $(post).find(config.selectors.postHref);
-		// iterate links
-		for (let i = 0; i < links.length; i++) {
-			// get href
-			const href = $(links[i]).attr('href');
-			// toss out incorrect links
-			if (href.includes('analytics') || href.includes('photo') || href.includes('history') || href.includes('retweets')) {
-				const arr = href.split('/');
-				const ret = `/${arr[1]}/${arr[2]}/${arr[3]}`;
-				return ret
-			} else if (i == links.length - 1) {
-				// return last link if none found
-				return href
-			}
-		}
+	    // get target links attached to post
+	    const links = $(post).find(config.selectors.postHref);
+	    // iterate links
+	    for (let i = 0; i < links.length; i++) {
+	        // get href
+	        const href = $(links[i]).attr('href');
+	        // toss out incorrect links
+	        if (href.includes('analytics') || href.includes('photo') || href.includes('history') || href.includes('retweets')) {
+	            const arr = href.split('/');
+	            const ret = `/${arr[1]}/${arr[2]}/${arr[3]}`;
+	            return ret
+	        } else if (i == links.length - 1) {
+	            // return last link if none found
+	            return href
+	        }
+	    }
 	}
 
 	// processing css
