@@ -16,3 +16,9 @@ export function log(msg, err = false) {
 		}
 	}
 }
+
+export function logObj(obj, depth = null) {
+	if (config.debug) {
+		console.dir(obj, { depth: depth })
+	}
+}
