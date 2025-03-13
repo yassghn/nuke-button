@@ -4,7 +4,7 @@
  * polling.mjs
  */
 
-import { log } from './log.mjs'
+import { log, logObj } from './log.mjs'
 import { getReactState } from './fight-react.mjs'
 
 /**
@@ -64,7 +64,7 @@ export async function pollReactState() {
 		// function to return react state
 		function returnReactState(reactState) {
 			log('found react state')
-			log(reactState)
+			logObj(reactState)
 			// resolve react state
 			resolve(reactState)
 		}
