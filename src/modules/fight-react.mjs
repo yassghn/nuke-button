@@ -4,6 +4,55 @@
  * fight-react.mjs
  */
 
+
+// delete react state
+function deleteReactState() {
+	if ($('div')[0].firstElementChild['wrappedJSObject']) {
+		delete ($('div')[0].firstElementChild['wrappedJSObject'])
+		return ''
+
+	}
+	if ($('div')[0].firstElementChild) {
+		delete ($('div')[0].firstElementChild)
+
+	}
+	//const reactPropsKey = Object.keys(wrapped).find(key => key.startsWith('__reactProps'))
+	//         //const state = wrapped[reactPropsKey].children?.props?.children?.props?.store?.getState()
+	//         //delete(state)
+}
+
+/**
+ *
+ * notes:
+ * reactProps.children.props.history ???
+ */
+async function removePostsReactProps(post, href) {
+	const wrapped = $('div')[0].firstElementChild['wrappedJSObject'] || $('div')[0].firstElementChild
+	const reactPropsKey = Object.keys(wrapped).find(key => key.startsWith('__reactProps'))
+	const reactFiberKey = Object.keys(wrapped).find(key => key.startsWith('__reactFiber'))
+	const reactProps = wrapped[reactPropsKey]
+	const reactFiber = wrapped[reactFiberKey]
+	logObj(reactFiber)
+	logObj(reactProps)
+	/*  delete(reactFiber.memorizedProps)
+	 delete(reactFiber.stateNode)
+	 delete(reactProps.children.props.children.props) */
+	//delete(wrapped[key])
+	//wrapped[key] = {}
+	//removeReactObjects(href)
+	const article = $(post).find('article')[0].firstElementChild['wrappedJSObject']
+	const keys = Object.keys(article).filter(key => key.startsWith('__react'))
+	//console.dir(article, { depth: null })
+	logObj(keys)
+	/* keys.forEach((key) => {
+		//logObj(article[key])
+		if (article[key]) {
+			delete (article[key])
+		}
+	}) */
+	//logObj(article)
+}
+
 // get react state
 export function getReactState() {
 	const wrapped = $('div')[0].firstElementChild['wrappedJSObject'] || $('div')[0].firstElementChild
