@@ -8,7 +8,7 @@ import { config } from './config.mjs'
 import { getElement } from './polling.mjs'
 
 // add processing html/css
-function addProcessingElement(post, href, style) {
+/* function addProcessingElement(post, href, style) {
     // create processing html
     const processingHtml = $(getProcessingHtml(href))
     // make timeline item div wrappers
@@ -40,7 +40,7 @@ function addProcessingElement(post, href, style) {
     $(finalDiv).insertBefore($(post))
     // return outter most div wrapper
     return finalDiv
-}
+} */
 
 // append style element to head
 function appendStyle() {
