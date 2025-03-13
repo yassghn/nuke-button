@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        nuke button
 // @namespace   https://github.com/yassghn/nuke-button
-// @version     2025-02-28
+// @version     2025-03-12
 // @description kill 'em all
 // @downloadURL https://update.greasyfork.org/scripts/528380/nuke%20button.user.js
 // @updateURL   https://update.greasyfork.org/scripts/528380/nuke%20button.meta.js
