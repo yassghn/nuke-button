@@ -7,6 +7,41 @@
 import { config } from './config.mjs'
 import { getElement } from './polling.mjs'
 
+// add processing html/css
+function addProcessingElement(post, href, style) {
+    // create processing html
+    const processingHtml = $(getProcessingHtml(href))
+    // make timeline item div wrappers
+    const divWrapper = $('<div/>')
+    const outterDivWrapper = $('<div/>')
+    const separatorDiv = $('<div/>')
+    const divWrapperClasses = $(post).children().eq(0).attr('class')
+    const outterDivWrapperClasses = $(post).attr('class')
+    const separatorClasses = $(post).find('div[role="separator"]').attr('class')
+    const transformCss = $(post).css('transform')
+    log(transformCss)
+    $(divWrapper).attr('class', divWrapperClasses)
+    $(outterDivWrapper).attr('class', outterDivWrapperClasses)
+    $(outterDivWrapper).attr('style', `transform: ${transformCss}; position: relative; width: 100%;`)
+    $(outterDivWrapper).attr('data-testid', 'cellInnerDiv')
+    $(separatorDiv).attr('class', separatorClasses)
+    $(separatorDiv).attr('role', 'separator')
+    // wrap divs
+    $(processingHtml).attr('class', outterDivWrapperClasses)
+    $(processingHtml).find('div').attr('class', outterDivWrapperClasses)
+    // add css to elements
+    $(processingHtml).css(getProcessingCss())
+    $(processingHtml).wrap($(outterDivWrapper)).wrap($(divWrapper))
+    const finalDiv = $(processingHtml).parents().eq(1)
+    $(finalDiv).append($(separatorDiv))
+    log($(separatorDiv))
+    log(finalDiv)
+    // add to dom
+    $(finalDiv).insertBefore($(post))
+    // return outter most div wrapper
+    return finalDiv
+}
+
 // append style element to head
 function appendStyle() {
     let $style = document.createElement('style')
@@ -178,22 +213,22 @@ export function getNukeConfirmationHtml() {
 
 // get post href
 export function getPostHref(post) {
-	// get target links attached to post
-	const links = $(post).find(config.selectors.postHref);
-	// iterate links
-	for (let i = 0; i < links.length; i++) {
-		// get href
-		const href = $(links[i]).attr('href')
-		// toss out incorrect links
-		if (href.includes('analytics') || href.includes('photo') || href.includes('history') || href.includes('retweets')) {
-			const arr = href.split('/')
-			const ret = `/${arr[1]}/${arr[2]}/${arr[3]}`
-			return ret
-		} else if (i == links.length - 1) {
-			// return last link if none found
-			return href
-		}
-	}
+    // get target links attached to post
+    const links = $(post).find(config.selectors.postHref);
+    // iterate links
+    for (let i = 0; i < links.length; i++) {
+        // get href
+        const href = $(links[i]).attr('href')
+        // toss out incorrect links
+        if (href.includes('analytics') || href.includes('photo') || href.includes('history') || href.includes('retweets')) {
+            const arr = href.split('/')
+            const ret = `/${arr[1]}/${arr[2]}/${arr[3]}`
+            return ret
+        } else if (i == links.length - 1) {
+            // return last link if none found
+            return href
+        }
+    }
 }
 
 // processing css
