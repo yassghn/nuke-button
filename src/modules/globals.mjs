@@ -35,8 +35,17 @@ function initWhiteList() {
 }
 
 // set current page
-export function initCurrentPage() {
+function initCurrentPage() {
 	gCurrentPage = window.location.href
+}
+
+// update current page
+export function setCurrentPage(page) {
+	gCurrentPage = page
+}
+
+export function setPageChanged(changed) {
+	gPageChanged = changed
 }
 
 // init globals
