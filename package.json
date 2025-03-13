@@ -1,0 +1,42 @@
+{
+  "name": "nuke-button",
+  "version": "1.0.0",
+  "description": "kill 'em all",
+  "homepage": "https://github.com/yassghn/nuke-button#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/yassghn/nuke-button.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yassghn/nuke-button/issues"
+  },
+  "author": "yassghn@protonmail.com",
+  "license": "SEE LICENSE IN license",
+  "main": "_build.js",
+  "type": "module",
+  "keywords": [
+    "twitter",
+    "x",
+    "nuke",
+    "block",
+    "userscript",
+    "js",
+    "javascript",
+    "hacking"
+  ],
+  "scripts": {
+    "build": "npm run rollup",
+    "clean": "node _build.js -c",
+    "cleanbuild": "npm run clean && npm run build",
+    "rollup": "rollup -c rollup.config.mjs --no-treeshake",
+    "test": "test"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "minimist": "^1.2.8",
+    "npm-watch": "^0.13.0",
+    "rollup": "^4.35.0",
+    "rollup-plugin-polyfill-node": "^0.13.0"
+  }
+}
