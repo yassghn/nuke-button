@@ -5,8 +5,8 @@
  */
 
 import { config } from './config.mjs'
-import { log } from './log.mjs'
 import { gObservers, gCurrentPage, gPageChanged, setCurrentPage, setPageChanged } from './globals.mjs'
+import { log } from './log.mjs'
 import { getElement, pollReactState, isLoggedIn } from './polling.mjs'
 import { addNukeButton, appendNukeButtonHtml } from './nuke-button.mjs'
 
