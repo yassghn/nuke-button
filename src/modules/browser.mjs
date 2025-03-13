@@ -4,7 +4,7 @@
  * browser.mjs
  */
 
-import { log } from "./log.mjs"
+import { log } from './log.mjs'
 
 // open href in new tab
 export function openHrefInNewTab(href) {

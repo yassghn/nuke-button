@@ -4,13 +4,13 @@
  * nuke-button.mjs
  */
 
-import { config } from "./config.mjs"
-import { log } from "./log.mjs"
-import { extractUserId } from "./api-data.mjs"
-import { getBlockList, blockBlockList, fetchUserId } from "./api-request.mjs"
-import { getProcessingHtml, getProcessingCss, getPostHref, getNukeConfirmationHtml, getNukeButtonHtml } from "./html-css.mjs"
-import { removeReactObjects, hidePost } from "./fight-react.mjs"
-import { gWhiteList, gProfile } from "./globals.mjs"
+import { config } from './config.mjs'
+import { log } from './log.mjs'
+import { extractUserId } from './api-data.mjs'
+import { getBlockList, blockBlockList, fetchUserId } from './api-request.mjs'
+import { getProcessingHtml, getProcessingCss, getPostHref, getNukeConfirmationHtml, getNukeButtonHtml } from './html-css.mjs'
+import { removeReactObjects, hidePost } from './fight-react.mjs'
+import { gWhiteList, gProfile } from './globals.mjs'
 
 // kill 'em all
 async function killEmAll(href) {

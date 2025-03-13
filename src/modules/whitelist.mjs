@@ -4,7 +4,7 @@
  * whitelist.mjs
  */
 
-import { gWhiteList } from "./globals.mjs"
+import { gWhiteList } from './globals.mjs'
 
 // filter block list
 export function filterDedupWhiteList(item, index, arr) {

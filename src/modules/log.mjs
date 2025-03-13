@@ -4,7 +4,7 @@
  * log.mjs
  */
 
-import { config } from "./config.mjs"
+import { config } from './config.mjs'
 
 // log
 export function log(msg, err = false) {

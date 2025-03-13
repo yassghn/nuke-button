@@ -3,11 +3,11 @@
  *
  * nuke-button.user.js
  */
-import { pollReactState, isLoggedIn, getElement } from "./modules/polling.mjs"
-import { initGlobals } from "./modules/globals.mjs"
-import { observeApp } from "./modules/observe.mjs"
-import { insertCss } from "./modules/html-css.mjs";
-import { config } from "./modules/config.mjs";
+import { pollReactState, isLoggedIn, getElement } from './modules/polling.mjs'
+import { initGlobals } from './modules/globals.mjs'
+import { observeApp } from './modules/observe.mjs'
+import { insertCss } from './modules/html-css.mjs'
+import { config } from './modules/config.mjs'
 
 (function () {
     'use strict'

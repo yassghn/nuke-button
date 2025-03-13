@@ -4,8 +4,8 @@
  * polling.mjs
  */
 
-import { log } from "./log.mjs"
-import { getReactState } from "./fight-react.mjs"
+import { log } from './log.mjs'
+import { getReactState } from './fight-react.mjs'
 
 /**
  * @param {string} selector
