@@ -5,9 +5,6 @@
  */
 
 import fs from 'node:fs'
-import nodePolyfills from 'rollup-plugin-polyfill-node'
-import resolve from '@rollup/plugin-node-resolve'
-import cjs from '@rollup/plugin-commonjs'
 
 // userscript manifest file
 const manifest = './manifest.mjs'
@@ -25,10 +22,5 @@ export default [{
 		dir: './dist',
 		format: 'iife',
 		banner: banner
-	}/* ,
-	plugins: [
-		resolve(),
-		cjs(),
-		nodePolyfills()
-	] */
+	}
 }]
