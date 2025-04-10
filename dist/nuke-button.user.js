@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name        nuke button
 // @namespace   https://github.com/yassghn/nuke-button
-// @version     2025-03-12
+// @version     2025-04-10
 // @description kill 'em all
 // @downloadURL https://update.greasyfork.org/scripts/528380/nuke%20button.user.js
 // @updateURL   https://update.greasyfork.org/scripts/528380/nuke%20button.meta.js
@@ -210,6 +210,12 @@
 		}
 	}
 
+	function logObj(obj, depth = null) {
+		if (config.debug) {
+			console.dir(obj, { depth: depth });
+		}
+	}
+
 	/**
 	 * nuke-button
 	 *
@@ -385,7 +391,7 @@
 			// function to return react state
 			function returnReactState(reactState) {
 				log('found react state');
-				log(reactState);
+				logObj(reactState);
 				// resolve react state
 				resolve(reactState);
 			}
@@ -1034,7 +1040,7 @@
 	}
 
 	// edit status view css
-	async function editStatusViewCss$1() {
+	async function editStatusViewCss() {
 	    // create css
 	    const css = {
 	        'z-index': -1,
